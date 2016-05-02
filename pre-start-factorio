@@ -8,7 +8,7 @@ else
   exit 1
 fi
 if [[ ! -d ${FACTORIO_PATH}/servers/ ]]; then
-  echo "Directory for servers does not exist! (${FACTORIO_PATH}/servers/), creating
+  echo "Directory for servers does not exist! (${FACTORIO_PATH}/servers/), creating"
   mkdir -p ${FACTORIO_PATH}/servers
 fi
 
@@ -20,12 +20,13 @@ if [[ -e ${FACTORIO_PATH}/saves/$MAP.zip ]]; then
     if [[ ! -z `ls ${FACTORIO_PATH}/servers/$PORT/saves/_autosave*.zip` ]]; then
       lastsave=`ls -t ${FACTORIO_PATH}/servers/$PORT/saves/_autosave* | head -1`
       if [[ -e  ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip ]]; then
-        if [[ -e ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip.old ]]; then
-          rm ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip.old
-        fi
-        mv ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip.old
+        rm ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
       fi
       cp $lastsave ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
+    else
+      if [[ ! -e ${FACTORIO_PATH}/servers/$PORT/saves/$PORT ]]; then
+        ln -P ${FACTORIO_PATH}/saves/$MAP.zip ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
+      fi
     fi
   fi
 
