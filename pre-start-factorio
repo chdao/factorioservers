@@ -2,7 +2,7 @@
 FACTORIO_PATH=$1
 PORT=$2
 if [[ -e ${FACTORIO_PATH}/saves/mapping.csv ]]; then
-  MAP=`grep $PORT ${FACTORIO_PATH}/saves/mapping.csv | awk -F "," '{print $2}'`
+  MAP=`egrep ^\$PORT ${FACTORIO_PATH}/saves/mapping.csv | awk -F "," '{print $2}'`
 else
   echo "Mapping file not found! Please create a mapping file in ${FACTORIO_PATH}"
   exit 1

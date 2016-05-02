@@ -29,3 +29,12 @@ You need to dump your save files in $FACTORIO_PATH/saves/ along with the mapping
 Basically it just copies files around and makes sure that nothing overwrites other servers file. The initial setup links the mods to the (new) server. You can then add a mod to each servers. This way if you want "basic" mods to be installed on all servers, they will be.
 
 ####Example: systemctl start factorio@34197
+
+#NOTES
+Do not remove/modify the lines in the config.ini-template where it says {PORT}, those are used by the pre-startup-script to generate a config file on the fly for each server.<br>
+The config.ini for each server ends up in /tmp/factorio-config.$PORT<br>
+This config is removed every time the server restarts. I'll probably move it around instead and keep it with the server so that if you change the settings for a single server, it's permanent.
+
+#TODO
+Make changes to single server config.ini permanent.
+
