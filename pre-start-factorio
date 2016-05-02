@@ -24,7 +24,7 @@ if [[ -e ${FACTORIO_PATH}/saves/$MAP.zip ]]; then
       fi
       cp $lastsave ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
     else
-      if [[ ! -e ${FACTORIO_PATH}/servers/$PORT/saves/$PORT ]]; then
+      if [[ ! -e ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip ]]; then
         ln -P ${FACTORIO_PATH}/saves/$MAP.zip ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
       fi
     fi
