@@ -1,5 +1,5 @@
 [Unit]
-Description=Factorio server on port %i
+Description=Factorio server on port %i 
 
 [Service]
 EnvironmentFile=/etc/default/factorio-servers
