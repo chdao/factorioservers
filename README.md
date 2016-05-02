@@ -17,7 +17,7 @@ CONFIGURATION
 In $FACTORIO_PATH/saves/, there has to be a mapping.csv file which will map your maps names to a port.
 
 The mapping is as follow: \<port\>,\<mapname.zip\>
-
+Example: 34197,frankthetank.zip
 
 There is also a template for the configs to use with the servers (that goes in $FACTORIO_PATH/servers/) that is the template for the settings of all thes servers.
 
