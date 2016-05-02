@@ -36,5 +36,5 @@ The config.ini for each server ends up in /tmp/factorio-config.$PORT<br>
 This config is removed every time the server restarts. I'll probably move it around instead and keep it with the server so that if you change the settings for a single server, it's permanent.
 
 #TODO
-Make changes to single server config.ini permanent.
+Make changes to make each server config.ini permanent.
 
