@@ -11,6 +11,7 @@ pre-start-factorio goes in /usr/local/bin/<br>
 config.ini-template goes in $FACTORIO_PATH/servers/<br>
 <br>
 Once this is in place, you need to do a systemctl daemon-reload.
+
 ----
 #CONFIGURATION
 
