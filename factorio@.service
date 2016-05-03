@@ -1,13 +1,12 @@
 [Unit]
-Description=Factorio server on port %i 
+Description=Factorio server on port %i
 
 [Service]
 EnvironmentFile=/etc/default/factorio-servers
 User=factorio
 Group=factorio
 ExecStartPre=/usr/local/bin/pre-start-factorio ${FACTORIO_PATH} %i
-ExecStopPost=/bin/rm /tmp/factorio-config.%i
-ExecStart=/opt/factorio/bin/x64/factorio --config /tmp/factorio-config.%i --start-server %i --autosave-interval $AUTOSAVE_INTERVAL --autosave-slots $AUTOSAVE_SLOTS --port %i ${EXTRA_BINARGS}
+ExecStart=/opt/factorio/bin/x64/factorio --config ${FACTORIO_PATH}/servers/%i/config/config.ini --start-server %i --autosave-interval $AUTOSAVE_INTERVAL --autosave-slots $AUTOSAVE_SLOTS --port %i
 TimeoutStopSec=10
 RestartSec=10
 Restart=on-failure
