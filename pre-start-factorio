@@ -1,45 +1,48 @@
 #!/bin/bash
 FACTORIO_PATH=$1
 PORT=$2
-if [[ -e ${FACTORIO_PATH}/saves/mapping.csv ]]; then
-  MAP=`egrep ^\$PORT ${FACTORIO_PATH}/saves/mapping.csv | awk -F "," '{print $2}'`
+if [[ -e "${FACTORIO_PATH}/saves/mapping.csv" ]]; then
+  MAP=`egrep ^\$PORT "${FACTORIO_PATH}/saves/mapping.csv" | awk -F "," '{print $2}'`
 else
   echo "Mapping file not found! Please create a mapping file in ${FACTORIO_PATH}"
   exit 1
 fi
-if [[ ! -d ${FACTORIO_PATH}/servers/ ]]; then
+if [[ ! -d "${FACTORIO_PATH}/servers/" ]]; then
   echo "Directory for servers does not exist! (${FACTORIO_PATH}/servers/), creating"
-  mkdir -p ${FACTORIO_PATH}/servers
+  mkdir -p "${FACTORIO_PATH}/servers"
 fi
 
-if [[ -e ${FACTORIO_PATH}/saves/$MAP.zip ]]; then
-  if [[ ! -e ${FACTORIO_PATH}/servers/$PORT/saves ]]; then
-    mkdir -p ${FACTORIO_PATH}/servers/$PORT/saves
-    ln -P ${FACTORIO_PATH}/saves/$MAP.zip ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
+if [[ -e "${FACTORIO_PATH}/saves/$MAP.zip" ]]; then
+  if [[ ! -e "${FACTORIO_PATH}/servers/$PORT/saves" ]]; then
+    mkdir -p "${FACTORIO_PATH}/servers/$PORT/saves"
+    ln -P "${FACTORIO_PATH}/saves/$MAP.zip" "${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip"
   else
-    if [[ ! -z `ls ${FACTORIO_PATH}/servers/$PORT/saves/_autosave*.zip` ]]; then
-      lastsave=`ls -t ${FACTORIO_PATH}/servers/$PORT/saves/_autosave* | head -1`
-      if [[ -e  ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip ]]; then
-        rm ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
+    if [[ ! -z `ls "${FACTORIO_PATH}/servers/$PORT/saves/"_autosave*.zip` ]]; then
+      lastsave=`ls -t "${FACTORIO_PATH}/servers/$PORT/saves/"_autosave*.zip | head -1`
+      if [[ -e  "${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip" ]]; then
+        rm "${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip"
       fi
-      cp $lastsave ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
+      cp "$lastsave" "${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip"
     else
-      if [[ ! -e ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip ]]; then
-        ln -P ${FACTORIO_PATH}/saves/$MAP.zip ${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip
+      if [[ ! -e "${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip" ]]; then
+        ln -P "${FACTORIO_PATH}/saves/$MAP.zip" "${FACTORIO_PATH}/servers/$PORT/saves/$PORT.zip"
       fi
     fi
   fi
 
-  if [[ ! -e ${FACTORIO_PATH}/servers/$PORT/mods ]]; then
-    mkdir ${FACTORIO_PATH}/servers/$PORT/mods 
-    for FILE in ${FACTORIO_PATH}/mods/*; do
+  if [[ ! -e "${FACTORIO_PATH}/servers/$PORT/mods" ]]; then
+    mkdir "${FACTORIO_PATH}/servers/$PORT/mods"
+    for FILE in "${FACTORIO_PATH}/mods/"*; do
       ln -s "$FILE" "${FACTORIO_PATH}/servers/$PORT/mods/"
     done
   fi
-  if [[ ! -e /tmp/factorio-config.$PORT ]]; then
-    /bin/sed -e s/{PORT}$/${PORT}/g ${FACTORIO_PATH}/servers/config.ini-template -n -e "w /tmp/factorio-config.$PORT"
+  if [[ ! -d "${FACTORIO_PATH}/servers/$PORT/config/" ]]; then
+    mkdir -p "${FACTORIO_PATH}/servers/$PORT/config/"
   fi
-  chown factorio.factorio ${FACTORIO_PATH}/servers/* -R
+  if [[ ! -e ${FACTORIO_PATH}/servers/$PORT/config/config.ini ]]; then
+    /bin/sed -e s/{PORT}$/${PORT}/g ${FACTORIO_PATH}/servers/config.ini-template -n -e "w ${FACTORIO_PATH}/servers/$PORT/config/config.ini"
+  fi
+  chown factorio.factorio "${FACTORIO_PATH}/servers/" -R
 else
   echo "Mapping for $MAP does not have a port in ${FACTORIO_PATH}/saves/mapping.csv!"
   exit 1
